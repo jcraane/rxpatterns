@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>RxPatterns</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div id="sidebar-menu" class="col-2">
+            <ul class="main-menu nav nav-stacked affix">
+            </ul>
+        </div>
+        <div id="static-content" class="col-10">
+            <h1 id="par-1">Sequences</h1>
+            <h2 id="sub-par-1-1">Creating pairs</h2>
+            <p>
+                <!-- HTML generated using hilite.me -->
+            <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre
+                    style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">final</span> Observable<span
+                    style="color: #333333">&lt;</span>Integer<span style="color: #333333">&gt;</span> numbers <span
+                    style="color: #333333">=</span> Observable<span style="color: #333333">.</span><span
+                    style="color: #0000CC">from</span><span style="color: #333333">(</span>Arrays<span
+                    style="color: #333333">.</span><span style="color: #0000CC">asList</span><span
+                    style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span
+                    style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">2</span><span
+                    style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">3</span><span
+                    style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">4</span><span
+                    style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">5</span><span
+                    style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">6</span><span
+                    style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">7</span><span
+                    style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">8</span><span
+                    style="color: #333333">));</span>
+
+        numbers
+                <span style="color: #333333">.</span><span style="color: #0000CC">zipWith</span><span
+                        style="color: #333333">(</span>numbers
+                        <span style="color: #333333">.</span><span style="color: #0000CC">skip</span><span
+                        style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span
+                        style="color: #333333">),</span> <span style="color: #333333">(</span>first<span
+                        style="color: #333333">,</span> second<span style="color: #333333">)</span> <span
+                        style="color: #333333">-&gt;</span> Arrays<span style="color: #333333">.</span><span
+                        style="color: #0000CC">asList</span><span style="color: #333333">(</span>first<span
+                        style="color: #333333">,</span> second<span style="color: #333333">))</span>
+                <span style="color: #333333">.</span><span style="color: #0000CC">subscribe</span><span
+                        style="color: #333333">(</span>System<span style="color: #333333">.</span><span
+                        style="color: #0000CC">out</span><span style="color: #333333">::</span>println<span
+                        style="color: #333333">);</span>
+</pre>
+            </div>
+
+            </p>
+            <h2 id="sub-par-1-2">sub-par-1-2</h2>
+            <p>test3</p>
+            <h1 id="par-2">par-2</h1>
+            <h2 id="sub-par-2-1">sub-par-2-1</h2>
+            <p>test1</p>
+            <h2 id="sub-par-2-2">sub-par-2-2</h2>
+            <p>test3</p>
+        </div>
+    </div>
+</div>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var sidebarMainMenu = $('#sidebar-menu .main-menu');
+        var staticContent = $('#static-content');
+        staticContent.find('h1').each(function () {
+            sidebarMainMenu.append('<li id="' + $(this).attr('id') + '-menu"><a href="#' + $(this).attr('id') + '">' + $(this).html() + '</li>');
+            title = sidebarMainMenu.find('#' + $(this).attr('id'));
+        });
+        staticContent.find('h2').each(function () {
+            prevTitle = sidebarMainMenu.find('#' + $(this).prevAll('h1').first().attr('id') + '-menu');
+            prevTitle.not(":has(ul)").append('<ul class="sub-menu"></ul>');
+            prevTitle.find('.sub-menu').append('<li id="' + $(this).attr('id') + '-menu"><a href="#' + $(this).attr('id') + '">' + $(this).html() + '</li>');
+        });
+        sidebarMainMenu.affix({
+            offset: {
+                top: 0  // To Modify according to the height offset
+            }
+        });
+    });
+</script>
+</body>
+</html>
